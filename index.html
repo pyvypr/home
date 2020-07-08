@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>VyPR - Performance Analysis for Python Programs</title>
+
+    <!-- Bootstrap -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="static/css/custom.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<nav class="navbar navbar">
+  	  <div class="container-fluid">
+  	    <!-- Brand and toggle get grouped for better mobile display -->
+  	    <div class="navbar-header">
+  	      <a class="navbar-brand" href="index.html"><img src="static/images/vypr_logo.jpeg" height="50px" margin-top="-10px" /></a>
+  	    </div>
+
+  	    <!-- nav links -->
+  	    <div class="collapse navbar-collapse" id="navbar">
+  	      <ul class="nav navbar-nav">
+            <!--<li><a href="tutorial.html">Tutorial</a></li>-->
+  	        <li><a href="use-vypr.html">Get Started with VyPR</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="talks.html">Talks</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="licence.html">Licence</a></li>
+  	      </ul>
+  	    </div><!-- /.navbar-collapse -->
+  	  </div><!-- /.container-fluid -->
+  	</nav>
+
+	<div class="container">
+    <!--<p>Our ultimate goal is to automate performance analysis by having engineers formalise their performance requirements in a temporal logic, and automate explanation of any violations.</p>
+    <p><b>VyPR is a step towards such automation.</b>  It allows engineers to write low-level properties over state and time, locally inside functions, and check whether their service holds such properties while the service is still running.  Engineers write properties in our specification language, Control-Flow Temporal Logic (CFTL), using VyPR's Python binding, PyCFTL.</p>!-->
+
+    <div class="navbar-right">
+      <img alt="Brand" src="static/logos/cern-logo.png" height="80px">
+    </div>
+    <div class="navbar-right">
+      <img alt="Brand" src="static/logos/manchester-logo.png" height="80px">
+    </div>
+
+    <p>A prototype framework under ongoing development that allows developers to analyse the performance of their Python programs by writing queries and analysing the results.</p>
+    <p>Actively developed at <a href="http://home.cern/">CERN</a>, at the <a href="http://cms.cern">CMS Experiment</a>, and <a href="http://manchester.ac.uk">The University of Manchester</a>.</em></p>
+    <p>Author: <a href="http://cern.ch/jdawes" target="new">Joshua Dawes</a></p>
+    <br>
+    <h4>Using VyPR is easy (to make a start, see <a href="use-vypr.html">here</a>):</h4>
+
+    <div class="container-fluid" style="margin-top:50px;">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="panel panel-success">
+            <div class="panel-heading"><b>1 - Querying</b></div>
+            <div class="panel-body">
+              <p><b>You</b> use VyPR's library to write a query about the performance of a part of your program.</p>
+              <p>Queries written for VyPR take the form of properties that a run of that part of the program should hold.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-heading"><b>2 - Instrumentation</b></div>
+            <div class="panel-body">
+              <p>VyPR determines where in your program to take data to check your query.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-heading"><b>3 - Monitoring</b></div>
+            <div class="panel-body">
+              <p>At runtime, VyPR resolves your query by taking measurements.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>Analysing Query Results</h4>
+    <p>VyPR collects detailed (but conservative) information at runtime that lets you see:</p>
+    <div class="container-fluid" style="margin-top:50px;">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-body">
+              <p><b>Whether the properties your queries defined were satisfied.</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-body">
+              <p><b>Whatever the outcome, which parts of the code were responsible.</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="panel panel-info">
+            <div class="panel-body">
+              <p><b>Given a group of query results, whether surrounding code may be responsible.</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--<h2>PyCFTL</h2>
+    <p>A specification language for expressing constraints over state and time during runs of individual functions in a system.  It's designed to allow engineers to write specifications about their software by thinking <em>directly</em> about their code, rather than in abstraction.</p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-success">
+          <div class="panel-heading"><b>Natural Language Specification</b></div>
+          <div class="panel-body">
+            <h4><i>&quot;Every time <b>x</b> changes, the next call to <b>write</b> should take no more than a second.&quot;</i></h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="panel panel-success">
+          <div class="panel-heading"><b>Python code using the PyCFTL library</b></div>
+          <div class="panel-body">
+<pre>Forall(q = changes('x')).\
+Check(
+  lambda q : (
+    q.next_call('write').duration()._in([0, 1])
+  )
+)</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+
+  <div class="footer-copyright text-center py-3">
+    <p>(C) Copyright 2020 CERN and University of Manchester.</p>
+  </div>
+
+  </body>
+</html>

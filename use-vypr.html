@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>VyPR - Performance Analysis for Python Programs</title>
+
+    <!-- Bootstrap -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="static/css/custom.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<nav class="navbar navbar">
+  	  <div class="container-fluid">
+  	    <!-- Brand and toggle get grouped for better mobile display -->
+  	    <div class="navbar-header">
+          <a class="navbar-brand" href="index.html"><img src="static/images/vypr_logo.jpeg" height="50px" margin-top="-10px" /></a>
+        </div>
+
+  	    <!-- nav links -->
+  	    <div class="collapse navbar-collapse" id="navbar">
+  	      <ul class="nav navbar-nav">
+  	        <!--<li><a href="tutorial.html">Tutorial</a></li>-->
+            <li><a href="use-vypr.html">Get Started with VyPR</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="talks.html">Talks</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="licence.html">Licence</a></li>
+  	      </ul>
+  	    </div><!-- /.navbar-collapse -->
+  	  </div><!-- /.container-fluid -->
+  	</nav>
+
+	<div class="container">
+    <nav>
+      <ul class="pager">
+        <li><a href="use-vypr.html">Getting Started with VyPR</a></li>
+        <li><a href="writing-queries.html">Writing Queries</a></li>
+        <li><a href="vypr-analysis.html">Getting Started with Offline Analysis</a></li>
+        <li><a href="offline-analysis-part-1.html">Offline Analysis - Part 1</a></li>
+        <li><a href="offline-analysis-part-2.html">Offline Analysis - Part 2</a></li>
+      </ul>
+    </nav>
+    <h1>Use VyPR</h1>
+    <p><i>If you want to work with VyPR (for normal Python programs or web services), or encounter any problems with VyPR, please <a href="mailto:joshua.dawes@cern.ch">contact us</a>.</i></p>
+    <div class="alert alert-success" role="alert">
+      <p>This tutorial assumes Python 2.  We're working on Python 3!</p>
+    </div>
+    <div class="alert alert-success" role="alert">
+      <p>We have a sample Flask-based web service for you to test VyPR with <a href="http://github.com/pyvypr/SampleWebService/">here</a>.  It comes with a sample query file, a simple configuration file and an end-point that you can query to generate some data.</p>
+    </div>
+    <div class="alert alert-success" role="alert">
+      <p><b>Note:</b></p>
+      <p>VyPR can run in two modes: a VyPR thread can be started at the beginning of service start-up and used by every request, or a thread can be started for every request.  The version we demonstrate here starts a new thread for every request, simply because this doesn't require setting up VyPR to be accessible globally in your service.  More documentation on setting up threads globally is coming soon.</p>
+    </div>
+    <p>Start by pulling our setup script and running it from your service's root directory.</p>
+<pre>
+curl -L http://cern.ch/vypr/setup -o setup
+chmod +x setup
+./setup
+</pre>
+    <p>This will pull VyPR, its server and its analysis library, create the server's virtual environment, install dependencies and create the server's database.</p>
+    <h2>Set up VyPR's Server</h2>
+    <p>To run the server, open a new terminal (tmux is useful here), navigate to <i>VyPRServer/</i> and launch the virtual environment with <i>source venv/bin/activate</i>, then run</p>
+<pre>
+python run_service.py
+</pre>
+    <p>This will start VyPR's server on port 8080, unless you specify a different port with the <i>--port</i> argument.</p>
+    <h2>Setup configuration files</h2>
+    <p>We'll start with the query file.  The first time, pull our sample query file at <i>http://cern.ch/vypr/VyPR_queries.py</i>. This assumes that you have a function <i>paths_branching_test</i> in the module <i>routes</i>, in the package <i>app</i>. You probably don't have this, so follow the instructions at <a href="http://cern.ch/vypr/writing-queries.html">http://cern.ch/vypr/writing-queries.html</a> to write your own queries.</p>
+    <p>We'll now create the VyPR configuration file.  Again, a sample file can be pulled from http://cern.ch/vypr/vypr.config.  Here, we tell VyPR that it should use the verdict server running at http://localhost:8080 and that it should turn its explanation mode on.  Explanation mode currently means VyPR will add path recording instruments to enable path analysis once some results have been stored.</p>
+  <h2>Add VyPR to your service</h2>
+  <p>Assuming you're using Flask, to add VyPR to monitored service you should add the lines</p>
+<pre>
+app = Flask(...)
+...
+from VyPR import Monitor
+vypr = Monitor()
+vypr.initialise(app)
+</pre>
+  <p>Here, we import VyPR's monitoring mechanism, instantiate it, then initialise it over your Flask application. Initialisation includes adding special end-points to your service to control VyPR, and also adding before_request and teardown_request hooks to manage VyPR's monitoring thread.</p>
+  <h2>Instrument your service</h2>
+  <p>Instrumentation adds the necessary instructions to your service that will interact with VyPR at runtime, allowing it to monitor for your queries without having to check every piece of information your program gives.</p>
+  <p>From the root directory of your service, run</p>
+<pre>
+python VyPR/instrument.py
+</pre>
+  <p>This will take your queries and instrument the service accordingly.</p>
+  <h2>Run your service</h2>
+  <p>With instrumentation performed and VyPR added to your service's code, you can run your service as normal and VyPR will work behind the scenes!  The next step is analysing the data you get, for which we have built VyPR Analysis.</p>
+  <h2>Running a sample analysis</h2>
+  <p>We provide a simple analysis script that you can pull from http://cern.ch/vypr/sample_analysis.py to the root directory of your project (this is where the analysis library is).</p>
+  <p>This is a simple script that shows some of the basic functions provided by the analysis library to explore results of your queries.  We provide some explanation of it in <a href="http://cern.ch/vypr/offline-analysis-part-1.html">Part 1</a> of our examples.</p>
+  <p>For a more complex example of using the analysis library, take a look at <a href="http://cern.ch/vypr/offline-analysis-part-2.html">Part 2</a>. It was originally created to reproduce some of the results obtained when applying VyPR at the CMS Experiment and shows how to use the methods in the analysis library for comparing different paths taken through a program and visualising this comparison.</p>
+  </div>
+
+  <div class="footer-copyright text-center py-3">
+    <p>(C) Copyright 2020 CERN and University of Manchester.</p>
+  </div>
+  
+  </body>
+</html>

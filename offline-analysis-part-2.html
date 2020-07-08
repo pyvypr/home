@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>VyPR - Performance Analysis for Python Programs</title>
+
+    <!-- Bootstrap -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="static/css/custom.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<nav class="navbar navbar">
+  	  <div class="container-fluid">
+  	    <!-- Brand and toggle get grouped for better mobile display -->
+  	    <div class="navbar-header">
+          <a class="navbar-brand" href="default.htm"><img src="static/images/vypr_logo.jpeg" height="50px" margin-top="-10px" /></a>
+        </div>
+
+  	    <!-- nav links -->
+  	    <div class="collapse navbar-collapse" id="navbar">
+  	      <ul class="nav navbar-nav">
+  	        <!--<li><a href="tutorial.html">Tutorial</a></li>-->
+            <li><a href="use-vypr.html">Get Started with VyPR</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="talks.html">Talks</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="licence.html">Licence</a></li>
+  	      </ul>
+  	    </div><!-- /.navbar-collapse -->
+  	  </div><!-- /.container-fluid -->
+  	</nav>
+
+	<div class="container">
+    <nav>
+      <ul class="pager">
+        <li><a href="use-vypr.html">Getting Started with VyPR</a></li>
+        <li><a href="writing-queries.html">Writing Queries</a></li>
+        <li><a href="vypr-analysis.html">Getting Started with Offline Analysis</a></li>
+        <li><a href="offline-analysis-part-1.html">Offline Analysis - Part 1</a></li>
+        <li><a href="offline-analysis-part-2.html">Offline Analysis - Part 2</a></li>
+      </ul>
+    </nav>
+    <h1>Sample Analysis Script - visualising the path comparison</h1>
+    <p>The script shown here is taken from our CHEP 2019 paper, for which we made our experiments easy to reproduce and publicly available (see <a href="http://cern.ch/vypr/chep-2019/">here</a>).</p>
+    <p>The aim of the script is to show the observed times taken to reach one point from another and how they differ depending on the path taken through the function.</p>
+    <p>We will explain how the script uses data collected at runtime to create a visual display of the observed time taken by a run along a subpath.</p>
+    <h2>Importing modules</h2>
+    <p>First, let's import the modules we will need and set the path to server and the monitored service. This script was designed to be self-contained, so the <i>va.prepare("verdicts.db")</i> command sets up an instance of VyPR's server in the background. Since it takes some time to start running, we have to poll it until it responds in order to make sure that the connection is set up before we try to perform the analysis. </p>
+    <p>The name of the database which stores performance data is, in this case, 'verdicts.db'. However, in general, the server can be started based on any other available database, provided that it is reachable by an SQLite connection, by simply calling this function with the string (the name of that database) as an argument. </p>
+    <pre>
+import sys
+import ast
+import matplotlib
+import matplotlib.pyplot as plt
+from dateutil.parser import isoparse
+import traceback
+import json
+import argparse
+
+import VyPRAnalysis as va
+va.prepare("verdicts.db")
+va.set_monitored_service_path("uploader-experiments/uploader/")
+
+from VyPR.SCFG.parse_tree import ParseTree
+    </pre>
+    <h2> Observed times for different paths </h2>
+    <p>The following section of code begins with fetching a list of functions from the database and selecting the function <i>server-app.metadata_handler_MetadataHandler:__init__}}</i> (creating an object instance representing this function with the corresponding attributes' values). We also need its symbolic control-flow graph, the object representing a directed graph, whose structure is derived from the source code being monitored by VyPR. This object will be important for reconstructing the paths taken.</p>
+    <p>The next step is to iterate through all the calls of this function and the failed verdicts detected during each call and compare two different subpaths in terms of the observed time taken for the program run along each subpath. More precisely, for every such verdict, we take two observations - each storing the data about the recorded value of the specified property of interest (i.e. duration). Sorting them by the value of <i>sub_index</i> (in ascending order) ensures that the left-hand side path always refers to the observation with the sub-index value 0, which is recorded first. The <i>rhs_path</i> stores the path taken to the point that happens later during the run, and it is the time between those two events that we want to analyse. Both paths contain the part of the run between the beginning of the run and the first observation (this is exactly what is stored in the LHS path, but the RHS also contains the rest of the path up to the second observation). Using the path difference to get the subpath taken between those two points and the grammar derived from the SCFG, it is possible to construct a parse tree with the information about the path between the two observations.</p>
+    <p>The most important output of this section is the list of parse trees which record the paths and the intersection of those trees.</p>
+    <pre>
+metadata_function = va.list_functions()[2]
+
+scfg = metadata_function.get_scfg()
+grammar = scfg.derive_grammar()
+
+calls = metadata_function.get_calls()
+n_of_calls = len(calls)
+
+parse_trees_obs_value_pairs = []
+
+for (n, call) in enumerate(calls):
+  verdicts = call.get_verdicts()
+  for verdict in verdicts:
+    if verdict.binding == 3 and verdict.verdict == 0:
+      observations = sorted(verdict.get_observations(), key=lambda obs : obs.sub_index)
+      try:
+        lhs_path = observations[0].reconstruct_reaching_path(scfg)
+        rhs_path = observations[1].reconstruct_reaching_path(scfg)
+        path_difference = rhs_path[len(lhs_path):]
+        parse_tree = ParseTree(path_difference, grammar, path_difference[0]._source_state)
+        lhs_time = isoparse(ast.literal_eval(observations[0].observed_value)["time"])
+        rhs_time = isoparse(ast.literal_eval(observations[1].observed_value)["time"])
+        time_taken = (rhs_time - lhs_time).total_seconds()
+
+        parse_trees_obs_value_pairs.append((parse_tree, time_taken))
+      except:
+        pass
+
+
+parse_trees, times = zip(*parse_trees_obs_value_pairs)
+
+intersection = parse_trees[0].intersect(parse_trees[1:])
+    </pre>
+    <p>Now we are ready to construct a simple dictionary, the keys of which will be 0 and 1 - each representing the index of the subpath taken to generate the corresponding observation. Values that belong to them are lists containing the observed durations. We begin with getting the paths through the intersection parse tree to any path parameters.</p>
+    <pre>
+path_parameters = []
+intersection.get_parameter_paths(intersection._root_vertex, [], path_parameters)
+
+parameter_value_indices_to_times = {}
+subpaths = []
+
+n_of_trees = len(parse_trees)
+for (n, parse_tree) in enumerate(parse_trees):
+  subtree = parse_tree.get_parameter_subtree(path_parameters[0])
+  subpath = subtree.read_leaves()
+  if subpath in subpaths:
+    subpath_index = subpaths.index(subpath)
+  else:
+    subpaths.append(subpath)
+    subpath_index = len(subpaths)-1
+  if subpath_index not in parameter_value_indices_to_times:
+    parameter_value_indices_to_times[subpath_index] = [times[n]]
+  else:
+    parameter_value_indices_to_times[subpath_index].append(times[n])
+    </pre>
+    <h2> Plotting observed times for each subpath </h2>
+    <p>Finally, we have everything needed for creating the two plots shown below. The lists with the observed durations mentioned in the previous section are the measurement of interest. We are plotting these values vs their index.</p>
+    <pre>
+fig, (ax1, ax2) = plt.subplots(2)
+
+fig.set_figheight(8)
+fig.set_figwidth(12)
+
+ax1.set_title("Observed times along subpath with index 0")
+ax1.set_xlabel("Measurement index")
+ax1.set_ylabel("Time taken (s)")
+ax1.bar(
+  range(len(parameter_value_indices_to_times[0])),
+  parameter_value_indices_to_times[0]
+)
+
+ax2.set_title("Observed times along subpath with index 1")
+ax2.set_xlabel("Measurement index")
+ax2.set_ylabel("Time taken (s)")
+ax2.bar(
+  range(len(parameter_value_indices_to_times[1])),
+  parameter_value_indices_to_times[1]
+)
+
+fig.tight_layout()
+
+plt.show()
+    </pre>
+
+    <img src="static/images/metadata_plot_example.png">
+  </div>
+
+</body>
+</html>

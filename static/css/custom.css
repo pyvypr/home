@@ -1,0 +1,33 @@
+/* File for custom CSS. */
+
+body {
+	padding: 20px;
+}
+
+.navbar-brand {
+	font-size: 40px;
+	margin-top:-15px;
+}
+
+div.navbar-right {
+	background: white;
+	padding: 5px;
+}
+
+div.logo-wrapper {
+	margin-right: 10px;
+}
+
+img.homepage-property {
+	width: 80%;
+}
+
+div.tab-pane {
+	padding-top: 10px;
+}
+
+div.subtitle {
+	padding-left: 15px;
+	margin-top: -10px;
+	font-size: 12px;
+}
