@@ -8,12 +8,12 @@
     <title>VyPR - Performance Analysis for Python Programs</title>
 
     <!-- Bootstrap -->
-    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
 
-    <link href="static/css/custom.css" rel="stylesheet" />
+    <link href="../static/css/custom.css" rel="stylesheet" />
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +27,7 @@
   	  <div class="container-fluid">
   	    <!-- Brand and toggle get grouped for better mobile display -->
   	    <div class="navbar-header">
-          <a class="navbar-brand" href="index.html"><img src="static/images/vypr_logo.jpeg" height="50px" margin-top="-10px" /></a>
+          <a class="navbar-brand" href="index.html"><img src="../static/images/vypr_logo.jpeg" height="50px" margin-top="-10px" /></a>
         </div>
 
   	    <!-- nav links -->
@@ -47,14 +47,24 @@
 	<div class="container">
     <nav>
       <ul class="pager">
-        <li><a href="use-vypr.html">Getting Started with VyPR</a></li>
-        <li><a href="writing-queries.html">Writing Queries</a></li>
-        <li><a href="vypr-analysis.html">Getting Started with Offline Analysis</a></li>
-        <li><a href="offline-analysis-part-1.html">Offline Analysis - Part 1</a></li>
-        <li><a href="offline-analysis-part-2.html">Offline Analysis - Part 2</a></li>
+        <li><a href="../use-vypr.html">Getting Started with VyPR</a></li>
+        <li><a href="../writing-queries.html">Writing Queries</a></li>
+        <li><a href="../analysis-environment/index.html">Web-based Analysis Environment</a></li>
+        <li><a href="index.html">Python Analysis Library</a></li>
       </ul>
     </nav>
-    <h1>Sample Analysis Script - visualising the path comparison</h1>
+
+    <div class="container">
+      <h1>Introduction to VyPR's Python Analysis Library</h1><br />
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation"><a href="index.html">Home</a></li>
+          <li role="presentation"><a href="offline-analysis-part-1.html">Example 1</a></li>
+          <li role="presentation" class="active"><a href="offline-analysis-part-2.html">Example 2</a></li>
+        </ul>
+      </div>
+      <div class="col-md-8">
+      <h2>Using Path Comparison to Explain Verdicts</h2>
     <p>The script shown here is taken from our CHEP 2019 paper, for which we made our experiments easy to reproduce and publicly available (see <a href="http://cern.ch/vypr/chep-2019/">here</a>).</p>
     <p>The aim of the script is to show the observed times taken to reach one point from another and how they differ depending on the path taken through the function.</p>
     <p>We will explain how the script uses data collected at runtime to create a visual display of the observed time taken by a run along a subpath.</p>
@@ -166,7 +176,10 @@ fig.tight_layout()
 plt.show()
     </pre>
 
-    <img src="static/images/metadata_plot_example.png">
+    <img src="../static/images/metadata_plot_example.png">
+      </div>
+    </div>
+
   </div>
 
 </body>
