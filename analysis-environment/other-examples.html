@@ -67,72 +67,81 @@
         <li role="presentation"><a href="select-call.html">Selecting Function Calls</a></li>
         <li role="presentation"><a href="select-binding.html">Selecting a Binding</a></li>
         <li role="presentation"><a href="select-sub-atom.html">Selecting a Sub-atom</a></li>
-        <li role="presentation" class="active"><a href="select-visualisation.html">Visualisation</a></li>
-        <li role="presentation"><a href="other-examples.html">More Examples</a></li>
+        <li role="presentation"><a href="select-visualisation.html">Visualisation</a></li>
+        <li role="presentation" class="active"><a href="other-examples.html">More Examples</a></li>
         <li role="presentation"><a href="test-cases.html">Selecting a Test Case</a></li>
       </ul>
     </div>
     <div class="col-md-8">
-    <p> Finally, our selection sequence resulted in highlighting the instrumentation points that are
-      relevant for the selected calls, binding, and subatom. These points are now also interactive -
-      we need to choose one at which we want to analyse the results observed at runtime. The first example
-      of this is plotting the observed duration of a call.
+
+    <h2> A more complex formula </h2>
+    <p> The queries that set a constraint over the program run can be different than the one we have seen
+      so far. Let's take a look at one that, instead of measuring the duration of a single function call,
+      selects two points of interest in the code and observes the time that the program run takes between
+      those points. The formula shown below selects a point at which the variable called
+      <i>self.destination_tag_name</i> changes and a point at which function
+      <i>self._conddbfw_con.session.commit</i> is called and states that the program run should take no
+      more than 0.1 second to get from the first one to the other.
     </p>
 
-    <img class="screenshot" src="../static/images/web_tool/select-option.png">
+    <img class="screenshot" src="../static/images/web_tool/other-function-1.png">
 
-    <h2> Plotting </h2>
-    <p>
+    <p> Since the query is about a pair of points, rather than just one, in order to analyse the performance,
+      we need to fix a pair of points in the code at which observations were taken. There can be more such
+      pairs, which is why they are grouped by bindings. In this example, there are two bindings and we can
+      filter the points in the code by selecting the binding of interest.
     </p>
+
     <div class="slideshow-container">
       <div class="mySlides fade">
-        <p> The example above is based on a simple formula that refers only to one point in the code.
-          As the formula sets a constraint over the duration of calls of the function <i>find_new_hashes</i>,
-          it is logical that we might want to see the observed durations of those calls. The plot below shows
-          the observed durations of the mentioned function calls, but only those that occurred during the
-          selected function calls of the monitored function <i>check_hashes</i>.
-        </p>
-        <div class="numbertext">1 / 5</div>
-        <img class="screenshot" src="../static/images/web_tool/observations-plot-1.png">
+        <div class="numbertext">1 / 6</div>
+        <img class="screenshot" src="../static/images/web_tool/other-f-binding-0.png">
       </div>
       <div class="mySlides fade">
-        <p> The previous plot has shown us the measurements taken by VyPR. However, we want to see if those
-          observations satisfied the constraint given in the formula. In this case, that means checking
-          whether a recorded duration belongs to the interval between 0 and 0.3 seconds. The verdicts that
-          say if the condition was met or violated are also stored by VyPR, but as boolean values. Apart
-          from determining whether the observed value succeeded or failed to meet the constraint, it is also
-          of interest to know by how much. <i>Verdict severity</i> is a quantity whose absolute value is based
-          on the distance between the observed value and the border value between success and failure, assigned
-          a positive sign if the observation is a success and a negative one if there was a failure.
-        </p>
-        <div class="numbertext">2 / 5</div>
-        <img class="screenshot" src="../static/images/web_tool/severity-plot.png">
+        <div class="numbertext">2 / 6</div>
+        <img class="screenshot" src="../static/images/web_tool/other-f-binding-1.png">
       </div>
+
       <div class="mySlides fade">
-        <p> We can filter the plot to show only the successes or only the violations. Here are the successes.
+        <p> Additionally, when we are creating plots we need to select a pair of points the time between
+          which we want to observe. At runtime, the time when each one is reached is recorded, but we need
+          to pair them and calculate the difference. This is all done in the background, while the user only
+          needs to select the pair of points of interest. Choosing the first one is an option available in
+          the dropdown menu.
         </p>
-        <div class="numbertext">3 / 5</div>
-        <img class="screenshot" src="../static/images/web_tool/success-plot.png">
+        <div class="numbertext">3 / 6</div>
+        <img class="screenshot" src="../static/images/web_tool/fix-first-point.png">
       </div>
+
       <div class="mySlides fade">
-        <p> We can filter the plot to show only the successes or only the violations. Here are the violations.
+        <p> Additionally, when we are creating plots we need to select a pair of points the time between
+          which we want to observe. At runtime, the time when each one is reached is recorded, but we need
+          to pair them and calculate the difference. This is all done in the background, while the user only
+          needs to select the pair of points of interest. Choosing the other one, along with the plotting
+          option is available as shown below.
         </p>
-        <div class="numbertext">4 / 5</div>
-        <img class="screenshot" src="../static/images/web_tool/failure-plot.png">
+        <div class="numbertext">4 / 6</div>
+        <img class="screenshot" src="../static/images/web_tool/fix-other-point.png">
       </div>
+
       <div class="mySlides fade">
-        <p> Expand the function calls selection on the left by using 'select all' option (or by changing the
-          interval) to see more observations. </p>
-        <div class="numbertext">5 / 5</div>
-        <img class="screenshot" src="../static/images/web_tool/observations-plot.png">
+        <p> Observed time taken by the program run between the selected two points.
+        </p>
+        <div class="numbertext">5 / 6</div>
+        <img class="screenshot" src="../static/images/web_tool/other-observation-plot.png">
+      </div>
+
+      <div class="mySlides fade">
+        <p> Verdict severity plot for the chosen pair.
+        </p>
+        <div class="numbertext">6 / 6</div>
+        <img class="screenshot" src="../static/images/web_tool/other-severity-plot.png">
       </div>
 
       <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
       <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
     </div>
-
-
     </div>
 
     </div>
