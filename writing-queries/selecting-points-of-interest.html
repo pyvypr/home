@@ -48,23 +48,57 @@
     <nav>
       <ul class="pager">
         <li><a href="../use-vypr.html">Getting Started with VyPR</a></li>
-        <li><a href="../writing-queries/index.html">Writing Queries</a></li>
+        <li><a href="index.html">Writing Queries</a></li>
         <li><a href="../analysis-environment/index.html">Web-based Analysis Environment</a></li>
-        <li><a href="index.html">Python Analysis Library</a></li>
+        <li><a href="../analysis-library/index.html">Python Analysis Library</a></li>
       </ul>
     </nav>
+
     <div class="container">
-      <h1>Introduction to VyPR's Python Analysis Library</h1><br />
+      <h1>Writing Queries for VyPR</h1><br />
       <div class="col-md-3">
         <ul class="nav nav-pills nav-stacked">
-          <li role="presentation" class="active"><a href="index.html">Home</a></li>
-          <li role="presentation"><a href="offline-analysis-part-1.html">Example 1</a></li>
-          <li role="presentation"><a href="offline-analysis-part-2.html">Example 2</a></li>
+          <li role="presentation"><a href="index.html">Introduction</a></li>
+          <li role="presentation"><a href="defining-constraints.html">Defining Constraints</a></li>
+          <li role="presentation" class="active"><a href="selecting-points-of-interest.html">Selecting Points of Interest</a></li>
+          <li role="presentation"><a href="reference.html">Reference</a></li>
         </ul>
       </div>
       <div class="col-md-8">
-      <p>Indepth documentation for VyPR's analysis library can be found <a href="https://cern.ch/vypr/analysis-docs/" target="new">here</a>.</p>
-      <p>See Examples 1 and 2 on the left for example uses of the library to analyse program performance.</p>
+      <h3>Simple selection of points of interest</h3>
+      <p>Once a property is defined, VyPR must be told where in the program to check.  Without this, the variables you use in your property have no meaning.  Suppose that you want to take</p>
+      <pre>If(q('x')._in([0, 10])).then(
+    q.next_call('f')._in([0, 0.5])
+  )</pre>
+      <p>and check it whenever <b>x</b> changes (so <b>q</b> holds the state in which <b>x</b> has changed).  You can do this with:</p>
+      <pre>Forall(q = changes('x')).\
+Check(
+  lambda q : 
+    If(q('x')._in([0, 10])).then(
+      q.next_call('f')._in([0, 0.5])
+    )
+)</pre>
+      <p>The <b>Forall</b> tells VyPR that the property given to <b>Check</b> should be checked whenever <b>x</b> changes at runtime.  Further, each time <b>x</b> changes, the state induced will be bound to the variable <b>q</b>.</p>
+
+      <h3>More complex selection of points of interest</h3>
+
+      <p>Suppose you want to check that, <i>whenever <b>file</b> changes, if <b>file</b> is equal to some string, <b>every future call</b> to <b>write</b> should satisfy some constraint.</i>  Then you can write the query:</p>
+    <pre>
+Forall(q = changes('file')).\
+Forall(t = calls('write', after='q')).\
+Check(
+  lambda q, t :
+    If(q('file').equals('some file name')).then(
+      t.duration()._in([0, 1])
+    )
+)</pre>
+
+    <!--<div class="panel panel-default">
+      <div class="panel-heading">Theoretical Aside</div>
+      <div class="panel-body">
+        <p>CFTL requires specifications to be in Prenex-Normal Form (PNF).  Since CFTL is sufficiently similar to First-Order Logic (FO Logic), we can borrow the result that every FO Logic formula can be rewritten into PNF.</p>
+      </div>
+    </div>-->
       </div>
     </div>
   </div>
