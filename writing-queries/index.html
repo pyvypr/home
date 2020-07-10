@@ -48,23 +48,51 @@
     <nav>
       <ul class="pager">
         <li><a href="../use-vypr.html">Getting Started with VyPR</a></li>
-        <li><a href="../writing-queries/index.html">Writing Queries</a></li>
+        <li><a href="index.html">Writing Queries</a></li>
         <li><a href="../analysis-environment/index.html">Web-based Analysis Environment</a></li>
-        <li><a href="index.html">Python Analysis Library</a></li>
+        <li><a href="../analysis-library/index.html">Python Analysis Library</a></li>
       </ul>
     </nav>
+
     <div class="container">
-      <h1>Introduction to VyPR's Python Analysis Library</h1><br />
+      <h1>Writing Queries for VyPR</h1><br />
       <div class="col-md-3">
         <ul class="nav nav-pills nav-stacked">
-          <li role="presentation" class="active"><a href="index.html">Home</a></li>
-          <li role="presentation"><a href="offline-analysis-part-1.html">Example 1</a></li>
-          <li role="presentation"><a href="offline-analysis-part-2.html">Example 2</a></li>
+          <li role="presentation" class="active"><a href="index.html">Introduction</a></li>
+          <li role="presentation"><a href="defining-constraints.html">Defining Constraints</a></li>
+          <li role="presentation"><a href="selecting-points-of-interest.html">Selecting Points of Interest</a></li>
+          <li role="presentation"><a href="reference.html">Reference</a></li>
         </ul>
       </div>
       <div class="col-md-8">
-      <p>Indepth documentation for VyPR's analysis library can be found <a href="https://cern.ch/vypr/analysis-docs/" target="new">here</a>.</p>
-      <p>See Examples 1 and 2 on the left for example uses of the library to analyse program performance.</p>
+      <p>The general idea of VyPR is that the developer writes queries over specific functions in a Python program.  These queries take the form of properties that should hold at runtime.  VyPR decides at runtime whether these properties are satisfied.  The results of the queries are given in the form of data describing the satisfaction by the program of the properties.</p>
+    <p>Queries are written in a central file called <b>VyPR_queries.py</b> in the root of a project's directory structure.  This file is written in Python using VyPR's query building library as such:</p>
+<pre>
+verification_conf = {
+  "package.module" : {
+    "class.method" : [
+      Forall(
+        q = changes('x')
+      ).Check(
+        lambda q : (
+          q.next_call('g').duration()._in([0, 0.1])
+        )
+      )
+    ]# class.method
+  }# package.module
+}# verification_conf
+</pre>
+
+      <h3>The Structure of a Query</h3>
+
+      <p>In order to tell VyPR where to apply instrumentation and subsequently query at runtime, you need to give the path to each function that you want to monitor.</p>
+      <p>In the query above, the first level strings tell VyPR which module to look inside and the second level strings tell VyPR which function inside that module.</p>
+
+      <p>In order to write a query, you should:</p>
+      <ul>
+        <li>Define the property to check.</li>
+        <li>Select the points in the program at which the property will be checked.</li>
+      </ul>
       </div>
     </div>
   </div>
