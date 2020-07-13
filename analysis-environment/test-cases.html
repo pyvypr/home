@@ -49,7 +49,7 @@
     <nav>
       <ul class="pager">
         <li><a href="../use-vypr.html">Getting Started with VyPR</a></li>
-        <li><a href="../writing-queries/index.html">Writing Queries</a></li>
+        <li><a href="../writing-queries.html">Writing Queries</a></li>
         <li><a href="index.html">Web-based Analysis Environment</a></li>
         <li><a href="../analysis-library/index.html">Python Analysis Library</a></li>
       </ul>
@@ -63,36 +63,50 @@
     <div class="col-md-3">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation"><a href="index.html">Introduction</a></li>
-        <li role="presentation" class="active"><a href="select-query.html">Selecting a Query</a></li>
+        <li role="presentation"><a href="select-query.html">Selecting a Query</a></li>
         <li role="presentation"><a href="select-call.html">Selecting Function Calls</a></li>
         <li role="presentation"><a href="select-binding.html">Selecting a Binding</a></li>
         <li role="presentation"><a href="select-sub-atom.html">Selecting a Sub-atom</a></li>
         <li role="presentation"><a href="select-visualisation.html">Visualisation</a></li>
         <li role="presentation"><a href="other-examples.html">More Examples</a></li>
-        <!-- <li role="presentation"><a href="test-cases.html">Selecting a Test Case</a></li> -->
+        <li role="presentation" class="active"><a href="test-cases.html">Selecting a Test Case</a></li>
       </ul>
     </div>
     <div class="col-md-8">
-    <p> The outline of the web application should reflect the way VyPR gathered the displayed data. The
-      whole process begins with the developer writing a query stating the desired behaviour of their
-      software. Of course, the developer can write multiple queries over functions that are written
-      in different files. Therefore, the first step for the app is to detect all the monitored functions
-      and list them. The user then selects the query the outcome of which they want to check and this
-      results in listing the calls of the selected function and showing the source code of the monitored
-      service.
+
+    <p> Work has been done recently to merge Continuous Integration with VyPR. This enabled the performance
+      analysis with regards to test cases. If data about the tests is detected in the database, the web tool
+      loads its slightly different version. The same analysis options are still available, but before
+      going through the selection sequence to fix a function, its calls, a binding, a sub-atom and the
+      instrumentation point(s), we need to choose a test case and filter the subsequent data to show only
+      the information collected during the executions of that test.
     </p>
 
-    <img class="screenshot" src="../static/images/web_tool/select-function.png">
+    <img class="screenshot" src="../static/images/web_tool/test-cases.png">
 
-    <p> The function calls are listed by the time they occurred at. The duration of each call is also shown
-      and the red or green query badge indicates whether the condition set in the query was met or not for that
-      particular function call. In the code, the lines that a quantifier refers to are highlighted as
-      points of interest and paired with the corresponding quantifier.
+    <p> As there can be a large number of monitored test cases, it is possible to filter the names by
+      typing in a part of the name.
     </p>
 
-    <img class="screenshot" src="../static/images/web_tool/select-calls.png">
+    <img class="screenshot" src="../static/images/web_tool/test-cases-filter.png">
 
+    <p> Afterwards, proceed as explained before, starting with selecting a function that was monitored
+      during the selected test's executions.
+    </p>
+    <div class="slideshow-container">
+      <div class="mySlides fade">
+        <div class="numbertext">1 / 2</div>
+        <img class="screenshot" src="../static/images/web_tool/test-cases-functions.png">
+      </div>
+      <div class="mySlides fade">
+        <p> A sample verdict severity plot is shown below. </p>
+        <div class="numbertext">2 / 2</div>
+        <img class="screenshot" src="../static/images/web_tool/ci-severity-plot.png">
+      </div>
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
+
     </div>
 
     </div>
