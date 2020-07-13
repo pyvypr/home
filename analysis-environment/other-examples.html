@@ -81,13 +81,13 @@
       those points. The formula shown below selects a point at which the variable called
       <i>self.destination_tag_name</i> changes and a point at which function
       <i>self._conddbfw_con.session.commit</i> is called and states that the program run should take no
-      more than 0.1 second to get from the first one to the other.
+      more than 0.1 seconds to get from the first one to the other.
     </p>
 
     <img class="screenshot" src="../static/images/web_tool/other-function-1.png">
 
     <p> Since the query is about a pair of points, rather than just one, in order to analyse the performance,
-      we need to fix a pair of points in the code at which observations were taken. There can be more such
+      we need to select a pair of points in the code at which observations were taken. There can be more such
       pairs, which is why they are grouped by bindings. In this example, there are two bindings and we can
       filter the points in the code by selecting the binding of interest.
     </p>
