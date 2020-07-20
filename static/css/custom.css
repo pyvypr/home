@@ -43,9 +43,10 @@ img.screenshot {
   max-width: inherit;
   position: relative;
   margin: auto;
+	height: 500px;
 }
 
-.mySlides .mySlides2{
+.mySlides {
   display: none;
 }
 
