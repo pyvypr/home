@@ -84,7 +84,7 @@
     <h2> Plotting </h2>
     <p>
     </p>
-    <div class="slideshow-container">
+    <div class="slideshow-container" style="height: 650px;">
       <div class="mySlides fade">
         <p> The example above is based on a simple formula that refers only to one point in the code.
           As the formula sets a constraint over the duration of calls of the function <i>find_new_hashes</i>,
@@ -92,7 +92,7 @@
           the observed durations of the mentioned function calls, but only those that occurred during the
           selected function calls of the monitored function <i>check_hashes</i>.
         </p>
-        <div class="numbertext">1 / 5</div>
+        <div class="numbertext">1 / 4</div>
         <img class="screenshot" src="../static/images/web_tool/observations-plot-1.png">
       </div>
       <div class="mySlides fade">
@@ -105,26 +105,20 @@
           on the distance between the observed value and the border value between success and failure, assigned
           a positive sign if the observation is a success and a negative one if there was a failure.
         </p>
-        <div class="numbertext">2 / 5</div>
+        <div class="numbertext">2 / 4</div>
         <img class="screenshot" src="../static/images/web_tool/severity-plot.png">
       </div>
       <div class="mySlides fade">
         <p> We can filter the plot to show only the successes or only the violations. Here are the successes.
         </p>
-        <div class="numbertext">3 / 5</div>
+        <div class="numbertext">3 / 4</div>
         <img class="screenshot" src="../static/images/web_tool/success-plot.png">
       </div>
       <div class="mySlides fade">
         <p> We can filter the plot to show only the successes or only the violations. Here are the violations.
         </p>
-        <div class="numbertext">4 / 5</div>
+        <div class="numbertext">4 / 4</div>
         <img class="screenshot" src="../static/images/web_tool/failure-plot.png">
-      </div>
-      <div class="mySlides fade">
-        <p> Expand the function calls selection on the left by using 'select all' option (or by changing the
-          interval) to see more observations. </p>
-        <div class="numbertext">5 / 5</div>
-        <img class="screenshot" src="../static/images/web_tool/observations-plot.png">
       </div>
 
       <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -137,10 +131,10 @@
       of inefficiency. Filtering the results by the path taken through the code will reveal whether
       verdicts taken by runs that took a particular path are significantly worse than others. Selecting
       the option to highlight the paths by verdict severity will expand the code to show all the lines
-      and colour the path differences depening on the average verdict severity observed along each path.
+      and colour the path differences depending on the average verdict severity observed along each path.
     </p>
-
-    <p> Option is currently not available for this type of atom. See an example <a href="other-examples.html">here</a>. </p>
+    <img class="screenshot" src="../static/images/web_tool/simple-path.png">
+    <p> In this case, only one path through the program is found. The code view is expanded and the path is highlighted, but viewing plots by paths is unavailable. See an example that shows analysis by path <a href="other-examples.html">here</a>. </p>
 
     </div>
 
