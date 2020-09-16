@@ -52,12 +52,16 @@
 
     <h4>Analysis Environment Demonstration</h4>
     <p>As a point of entry for analysing data recorded by VyPR at runtime, we provide a web-based analysis environment.  The documentation for this can be found <a href="/home/analysis-environment/">here</a>.</p>
-    <p>Here, we provide a self-contained instance of the analysis environment used in our tutorial.  You can get all the necessary code, set things up and launch the server locally by running</p>
-    <pre>curl -L http://cern.ch/vypr/setup-vypr-web-tool -O && source setup-vypr-web-tool && launch-vypr-web-tool</pre>
+    <p>Here, we provide a self-contained instance of the analysis environment used in our tutorial.  You can get all the necessary code and set things up by running</p>
+    <pre>curl -L http://cern.ch/vypr/setup-vypr-web-tool -O && source setup-vypr-web-tool</pre>
+    and then launch the tool with (in the same session)
+    <pre>launch-vypr-web-tool</pre>
 
     <h4>Visualisation</h4>
-    <p>In order to allow people to see what's happening when VyPR instruments and monitors a program, we provide a visualisation tool.  You can download this, set it up and launch it by running</p>
-    <pre>curl -L http://cern.ch/vypr/setup-vypr-visualisation -o setup-vypr-visualisation && source setup-vypr-visualisation && launch-vypr-vis</pre>
+    <p>In order to allow people to see what's happening when VyPR instruments and monitors a program, we provide a visualisation tool.  You can download this and set it up by running</p>
+    <pre>curl -L http://cern.ch/vypr/setup-vypr-visualisation -o setup-vypr-visualisation && source setup-vypr-visualisation</pre>
+    and then launch it with
+    <pre>launch-vypr-vis</pre>
 
   <div class="footer-copyright text-center py-3">
     <p>(C) Copyright 2020 CERN and University of Manchester.</p>
