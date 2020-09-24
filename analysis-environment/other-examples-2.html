@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>VyPR - Performance Analysis for Python Programs</title>
+
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="../static/css/custom.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<nav class="navbar navbar">
+  	  <div class="container-fluid">
+  	    <!-- Brand and toggle get grouped for better mobile display -->
+  	    <div class="navbar-header">
+          <a class="navbar-brand" href="../index.html"><img src="../static/images/vypr_logo.jpeg" height="50px" margin-top="-10px" /></a>
+        </div>
+
+  	    <!-- nav links -->
+  	    <div class="collapse navbar-collapse" id="navbar">
+  	      <ul class="nav navbar-nav">
+  	        <!--<li><a href="tutorial.html">Tutorial</a></li>-->
+            <li><a href="../use-vypr.html">Get Started with VyPR</a></li>
+            <li><a href="../publications.html">Publications</a></li>
+            <li><a href="../talks.html">Talks</a></li>
+            <li><a href="../team.html">Team</a></li>
+            <li><a href="../licence.html">Licence</a></li>
+  	      </ul>
+  	    </div><!-- /.navbar-collapse -->
+  	  </div><!-- /.container-fluid -->
+  	</nav>
+
+    <div class="container">
+
+    <nav>
+      <ul class="pager">
+        <li><a href="../use-vypr.html">Getting Started with VyPR</a></li>
+        <li><a href="../writing-queries.html">Writing Queries</a></li>
+        <li><a href="index.html">Web-based Analysis Environment</a></li>
+        <li><a href="../analysis-library/index.html">Python Analysis Library</a></li>
+      </ul>
+    </nav>
+
+
+	  <div class="container">
+
+    <h1>A Guide through the VyPR Analysis Environment</h1><br />
+
+    <div class="col-md-3">
+      <ul class="nav nav-pills nav-stacked">
+        <li role="presentation"><a href="index.html">Introduction</a></li>
+        <li role="presentation"><a href="select-query.html">Selecting a Query</a></li>
+        <li role="presentation"><a href="select-call.html">Selecting Function Calls</a></li>
+        <li role="presentation"><a href="select-binding.html">Selecting a Binding</a></li>
+        <li role="presentation"><a href="select-sub-atom.html">Selecting a Sub-atom</a></li>
+        <li role="presentation"><a href="select-visualisation.html">Visualisation</a></li>
+        <li role="presentation" class="active"><a href="other-examples.html">More Examples</a></li>
+        <li role="presentation"><a href="other-examples.html" style="margin-left:10px;">Part 1</a></li>
+        <li role="presentation" class="active">
+          <a href="other-examples-2.html" style="background-color:#6cb6f5; margin-left:10px;">Part 2</a></li>
+        <!-- <li role="presentation"><a href="test-cases.html">Selecting a Test Case</a></li> -->
+      </ul>
+    </div>
+    <div class="col-md-8">
+
+    <p> So far, we have seen a formula setting a constraint over the duration of a single function call,
+      and another one setting a constraint over the time that a program run takes between two points in
+      the code. Both formulas are placing a duration within an interval. The form of the specification
+      we show below is somewhat different. Instead of measuring time, it deals with array lengths,
+      specifying that the number of hashes not found should exceed 70% of the entire <i>hashes</i> list
+      length. We want to visualise the comparison of the lengths. The first step is to select the query
+      and filter the function calls.
+    </p>
+
+    <div class="slideshow-container" style="height:400px">
+      <div class="mySlides fade">
+        <div class="numbertext">1 / 2</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-1.png">
+      </div>
+      <div class="mySlides fade">
+        <div class="numbertext">2 / 2</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-2.png">
+      </div>
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <p> The query is about a pair of points, so in order to analyse the performance, we need to select
+      a pair of points in the code at which observations were taken. There can be more such pairs,
+      which is why they are grouped by bindings. In this example, there is only one binding we can select.
+      Upon the binding selection, it remains to choose a sub-atom of interest. Note that both sub-atoms define
+      instrumentation points at the same code line.
+    </p>
+
+    <div class="slideshow-container" style="height:400px;">
+      <div class="mySlides fade">
+        <div class="numbertext">1 / 3</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-3.png">
+      </div>
+      <div class="mySlides fade">
+        <div class="numbertext">2 / 3</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-4.png">
+      </div>
+
+      <div class="mySlides fade">
+        <div class="numbertext">3 / 3</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-5.png">
+      </div>
+
+      <a class="prev" onclick="plusSlides(-1, 1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1, 1)">&#10095;</a>
+
+    </div>
+
+    <h2> Visualisation </h2>
+    <div class="slideshow-container" style="height:550px;">
+      <div class="mySlides fade">
+        <p> The observation plot shows the lengths of the arrays of interest observed at runtime. The
+          legend indicates that the blue bars represent the length of <i>hashes</i> array and the orange
+          ones the length of <i>not_found</i> array.
+        </p>
+        <div class="numbertext">1 / 5</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-6.png">
+      </div>
+
+      <div class="mySlides fade">
+        <p> The observation plot shows the lengths of the arrays of interest observed at runtime. The
+          legend indicates that the blue bars represent the length of <i>hashes</i> array and the orange
+          ones the length of <i>not_found</i> array. The legend can also be used to filter the data to
+          show only one of the quantities.
+        </p>
+        <div class="numbertext">2 / 5</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-7.png">
+      </div>
+
+      <div class="mySlides fade">
+        <p> The observation plot shows the lengths of the arrays of interest observed at runtime. The
+          legend indicates that the blue bars represent the length of <i>hashes</i> array and the orange
+          ones the length of <i>not_found</i> array. The legend can also be used to filter the data to
+          show only one of the quantities.
+        </p>
+        <div class="numbertext">3 / 5</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-8.png">
+      </div>
+
+      <div class="mySlides fade">
+        <p> The lenghts can be viewed as independent quantities, but whether they satisfy the condition
+          given in the query depends on both. The verdict severity is, in this case, calculated as the
+          difference between the length of <i>not_found</i> and the length of <i>hashes</i> multiplied by
+          the factor 0.7.
+        </p>
+        <div class="numbertext">4 / 5</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-9.png">
+      </div>
+
+      <div class="mySlides fade">
+        <p> Selecting the path comparison option provides no further analysis as all the runs took the same
+          path. </p>
+        <div class="numbertext">5 / 5</div>
+        <img class="screenshot" src="../static/images/web_tool/other-dataset-10.png">
+      </div>
+
+      <a class="prev" onclick="plusSlides(-1, 2)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1, 2)">&#10095;</a>
+    </div>
+
+    </div>
+
+    </div>
+
+    </div>
+<script type="text/javascript" src="../static/js/analysis.js"></script>
+
+</body>
+
+</html>
