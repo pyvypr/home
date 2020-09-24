@@ -1,0 +1,55 @@
+original_pwd=`pwd`
+
+# setup global virtual environment
+# the requirements of each repository cloned will be added
+virtualenv --python=python2.7 venv
+source venv/bin/activate
+
+# clone and setup visualisation tool
+# cd = /
+git clone git@github.com:pyvypr/VyPR-visualisation.git
+cd VyPR-visualisation
+pip install -r requirements.txt
+
+# clone and setup VyPRServer
+# cd = /VyPR-visualisation/
+git clone git@github.com:pyvypr/VyPRServer.git
+cd VyPRServer
+rm -rf verdicts.db events.db
+sqlite3 verdicts.db < verdict-schema.sql
+sqlite3 events.db < app/events/events.sql
+pip install -r requirements.txt
+git clone git@github.com:pyvypr/VyPR.git
+cd ..
+
+
+# clone and setup test project
+# cd = /VyPR-visualisation/
+cd test-project
+pip install -r requirements.txt
+git clone git@github.com:pyvypr/VyPRLocal-py2.git VyPR
+
+# cd to VyPRServer
+cd ../VyPRServer
+# start process for VyPRServer
+python run_service.py --port 9002 --db verdicts.db --events-db events.db --path ../test-project/ &
+
+# delay for 5 seconds while the server starts
+sleep 5
+
+# cd into test-project, run instrumentation then run the program under monitoring
+cd ../test-project
+python VyPR/instrument.py
+python main.py
+
+# cd to VyPR-visualisation/src
+cd ../src
+
+# setup visualisation tool launch alias
+alias launch-vypr-vis='python VyPR-visualisation/src/launch.py --port 9001 --instrumentation-stream http://localhost:9002/event_stream/instrumentation/ --monitoring-stream http://localhost:9002/event_stream/monitoring/'
+
+# cd back to root
+cd ../../
+
+# signal end
+echo "Setup finished.  Run 'launch-vypr-vis' from $original_pwd to start it.".
