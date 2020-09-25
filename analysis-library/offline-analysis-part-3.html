@@ -85,6 +85,7 @@
         exceed 70% of the original list of hashes. The intuition here is that the optimisation should have
         a sufficient effect on the upload process that its removal would cause significantly different
         behaviour. </p>
+      <h2> Importing modules </h2>
       <p> Begin with importing the necessary modules and setting up the verdict server.</p>
       <pre>
 import sys
@@ -104,6 +105,8 @@ import VyPRAnalysis as va
 va.prepare("verdicts-hash-checking-analysis.db")
 va.set_monitored_service_path("uploader-experiments/uploader/")
       </pre>
+
+      <h2> Measured values of the hashes array lengths</h2>
 
       <p> Iterate through the calls of the hash checking function to gather the observed number of the
         checked hashes during each call, as well as the number of those that were not found. </p>
@@ -172,6 +175,8 @@ for (length_index, hash_length) in enumerate(hash_lengths):
     if bin[0] <= hash_length < bin[1]:
       groups[n] += hashes_length_to_percentages[length_index]
       </pre>
+
+      <h2> Plotting the percentages of hashes not found </h2>
 
       <p> Finally, create the plot showing the boxplots showing the distribution of the percentage of the
         hashes not found, grouped by the total number of hashes checked. We see that Conditions uploads
