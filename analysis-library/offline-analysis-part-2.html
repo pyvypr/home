@@ -61,6 +61,7 @@
           <li role="presentation"><a href="index.html">Home</a></li>
           <li role="presentation"><a href="offline-analysis-part-1.html">Example 1</a></li>
           <li role="presentation" class="active"><a href="offline-analysis-part-2.html">Example 2</a></li>
+          <li role="presentation"><a href="offline-analysis-part-3.html">Example 3</a></li>
         </ul>
       </div>
       <div class="col-md-8">
@@ -88,7 +89,7 @@ va.set_monitored_service_path("uploader-experiments/uploader/")
 from VyPR.SCFG.parse_tree import ParseTree
     </pre>
     <h2> Observed times for different paths </h2>
-    <p>The following section of code begins with fetching a list of functions from the database and selecting the function <i>server-app.metadata_handler_MetadataHandler:__init__}}</i> (creating an object instance representing this function with the corresponding attributes' values). We also need its symbolic control-flow graph, the object representing a directed graph, whose structure is derived from the source code being monitored by VyPR. This object will be important for reconstructing the paths taken.</p>
+    <p>The following section of code begins with fetching a list of functions from the database and selecting the function <i>server-app.metadata_handler_MetadataHandler:__init__</i> (creating an object instance representing this function with the corresponding attributes' values). We also need its symbolic control-flow graph, the object representing a directed graph, whose structure is derived from the source code being monitored by VyPR. This object will be important for reconstructing the paths taken.</p>
     <p>The next step is to iterate through all the calls of this function and the failed verdicts detected during each call and compare two different subpaths in terms of the observed time taken for the program run along each subpath. More precisely, for every such verdict, we take two observations - each storing the data about the recorded value of the specified property of interest (i.e. duration). Sorting them by the value of <i>sub_index</i> (in ascending order) ensures that the left-hand side path always refers to the observation with the sub-index value 0, which is recorded first. The <i>rhs_path</i> stores the path taken to the point that happens later during the run, and it is the time between those two events that we want to analyse. Both paths contain the part of the run between the beginning of the run and the first observation (this is exactly what is stored in the LHS path, but the RHS also contains the rest of the path up to the second observation). Using the path difference to get the subpath taken between those two points and the grammar derived from the SCFG, it is possible to construct a parse tree with the information about the path between the two observations.</p>
     <p>The most important output of this section is the list of parse trees which record the paths and the intersection of those trees.</p>
     <pre>
@@ -176,7 +177,7 @@ fig.tight_layout()
 plt.show()
     </pre>
 
-    <img src="../static/images/metadata_plot_example.png">
+    <img src="../static/images/metadata_plot_example.png" width="750px">
       </div>
     </div>
 

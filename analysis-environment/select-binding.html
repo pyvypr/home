@@ -63,23 +63,23 @@
     <div class="col-md-3">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation"><a href="index.html">Introduction</a></li>
-        <li role="presentation"><a href="select-query.html">Selecting a Query</a></li>
-        <li role="presentation"><a href="select-call.html">Selecting Function Calls</a></li>
-        <li role="presentation" class="active"><a href="select-binding.html">Selecting a Binding</a></li>
-        <li role="presentation"><a href="select-sub-atom.html">Selecting a Sub-atom</a></li>
-        <li role="presentation"><a href="select-visualisation.html">Visualisation</a></li>
+        <li role="presentation"><a href="select-query.html">Step 1: Selecting a Query</a></li>
+        <li role="presentation"><a href="select-call.html">Step 2: Selecting Function Calls</a></li>
+        <li role="presentation" class="active"><a href="select-binding.html">Step 3: Selecting a Binding</a></li>
+        <li role="presentation"><a href="select-sub-atom.html">Step 4: Selecting a Sub-atom</a></li>
+        <li role="presentation"><a href="select-visualisation.html">Step 5: Visualisation</a></li>
         <li role="presentation"><a href="other-examples.html">More Examples</a></li>
         <!-- <li role="presentation"><a href="test-cases.html">Selecting a Test Case</a></li> -->
       </ul>
     </div>
     <div class="col-md-8">
-    <p> Upon the calls selection, the listing of the monitored function source code is compressed to
-      show only the relevant bits of code. Apart from the lines detected by quantifiers, the calls
-      selection enabled filtering the instrumentation points at which observations were taken during
-      those calls and highlighting those points in the code as well. Due to the fact that a variable can be
-      changed, or a function called, at multiple points in the code, the points of interest are grouped
-      by bindings. Hence, the next step is to select a binding and see the points filtered to match the
-      selection.
+    <p> Upon the calls selection, only the lines of the selected function’s source code are shown that are
+      relevant to the selected query. For example, you will see lines identified by quantifiers and lines
+      identified by the code inside the selected query’s lambda. </p>
+    <p> Due to the fact that a variable can be changed, or a function called, at multiple points in the
+      code, the points of interest are grouped by bindings. Hence, once function calls have been selected,
+      the next step is to select the group of lines in the source code with respect to which you would
+      like to see performance data. In the interface, these groups are called “bindings”.
     </p>
 
     <img class="screenshot" src="../static/images/web_tool/select-subatom.png">

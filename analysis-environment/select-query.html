@@ -63,11 +63,11 @@
     <div class="col-md-3">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation"><a href="index.html">Introduction</a></li>
-        <li role="presentation" class="active"><a href="select-query.html">Selecting a Query</a></li>
-        <li role="presentation"><a href="select-call.html">Selecting Function Calls</a></li>
-        <li role="presentation"><a href="select-binding.html">Selecting a Binding</a></li>
-        <li role="presentation"><a href="select-sub-atom.html">Selecting a Sub-atom</a></li>
-        <li role="presentation"><a href="select-visualisation.html">Visualisation</a></li>
+        <li role="presentation" class="active"><a href="select-query.html">Step 1: Selecting a Query</a></li>
+        <li role="presentation"><a href="select-call.html">Step 2: Selecting Function Calls</a></li>
+        <li role="presentation"><a href="select-binding.html">Step 3: Selecting a Binding</a></li>
+        <li role="presentation"><a href="select-sub-atom.html">Step 4: Selecting a Sub-atom</a></li>
+        <li role="presentation"><a href="select-visualisation.html">Step 5: Visualisation</a></li>
         <li role="presentation"><a href="other-examples.html">More Examples</a></li>
         <!-- <li role="presentation"><a href="test-cases.html">Selecting a Test Case</a></li> -->
       </ul>
@@ -77,17 +77,20 @@
       whole process begins with the developer writing a query stating the desired behaviour of their
       software. Of course, the developer can write multiple queries over functions that are written
       in different files. Therefore, the first step for the app is to detect all the monitored functions
-      and list them. The user then selects the query the outcome of which they want to check and this
-      results in listing the calls of the selected function and showing the source code of the monitored
-      service.
+      and list them. The user’s first step is to select the function whose performance they want to analyse,
+      and then the relevant query over that function.  Given the selection of a function and property,
+      the web tool lists the calls of the selected function for which there are results from monitoring
+      the selected property.
     </p>
 
     <img class="screenshot" src="../static/images/web_tool/select-function.png">
 
-    <p> The function calls are listed by the time they occurred at. The duration of each call is also shown
-      and the red or green query badge indicates whether the condition set in the query was met or not for that
-      particular function call. In the code, the lines that a quantifier refers to are highlighted as
-      points of interest and paired with the corresponding quantifier.
+    <p> The function calls are listed by the time at which they occurred. The duration of each function
+      is also shown, along with a badge whose colour indicates whether there was a failure during that
+      run with respect to the selected query. Failure is indicated by red, success is indicated by green.
+      On the right of the interface, below the selected query, the tool displays the code of the selected
+      function. Here, the lines that a quantifier refers to are highlighted as points of interest and 
+      paired with the corresponding quantifier.
     </p>
 
     <img class="screenshot" src="../static/images/web_tool/select-calls.png">
