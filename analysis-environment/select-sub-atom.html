@@ -63,23 +63,25 @@
     <div class="col-md-3">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation"><a href="index.html">Introduction</a></li>
-        <li role="presentation"><a href="select-query.html">Selecting a Query</a></li>
-        <li role="presentation"><a href="select-call.html">Selecting Function Calls</a></li>
-        <li role="presentation"><a href="select-binding.html">Selecting a Binding</a></li>
-        <li role="presentation" class="active"><a href="select-sub-atom.html">Selecting a Sub-atom</a></li>
-        <li role="presentation"><a href="select-visualisation.html">Visualisation</a></li>
+        <li role="presentation"><a href="select-query.html">Step 1: Selecting a Query</a></li>
+        <li role="presentation"><a href="select-call.html">Step 2: Selecting Function Calls</a></li>
+        <li role="presentation"><a href="select-binding.html">Step 3: Selecting a Binding</a></li>
+        <li role="presentation" class="active"><a href="select-sub-atom.html">Step 4: Selecting a Sub-atom</a></li>
+        <li role="presentation"><a href="select-visualisation.html">Step 5: Visualisation</a></li>
         <li role="presentation"><a href="other-examples.html">More Examples</a></li>
         <!-- <li role="presentation"><a href="test-cases.html">Selecting a Test Case</a></li> -->
       </ul>
     </div>
     <div class="col-md-8">
     <p> On our way to determine the specific point in the code at which we want to observe the behaviour
-      of a program run, we have selected the function, the calls of the function and a binding. However,
-      this does not identify an instrumentation point uniquely. The relevant points are highlighted
-      and paired with the quatifier that marked them as points of interest or with the part of the formula
-      in the lambda expression in the query (also called an atom) that defined them as instrumentation
-      points. The atom sometimes refers to more than just one measurement, so the next step is to choose
-      one of the 'subatoms'.
+      of a program run, we have selected the function, the calls of the function and a group of lines.
+      We will base our analysis on this selection. However, this is not guaranteed to uniquely identify
+      a statement in code that generated that generated data at runtime. Once a group of lines is selected,
+      you then need to select a part of your query for which measurements were taken at runtime. Doing this
+      will enable the web tool to show you the statements in code that were monitored at runtime to decide
+      whether that part of your query held. The parts of your query that you select are called “atoms”.
+      If an atom required data from multiple statements in code at runtime, you will be allowed to select
+      individual parts of the atom, called the “sub-atoms”.
     </p>
 
     <img class="screenshot" src="../static/images/web_tool/select-subatom-done.png">

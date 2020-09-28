@@ -63,11 +63,11 @@
     <div class="col-md-3">
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation"><a href="index.html">Introduction</a></li>
-        <li role="presentation"><a href="select-query.html">Selecting a Query</a></li>
-        <li role="presentation"><a href="select-call.html">Selecting Function Calls</a></li>
-        <li role="presentation"><a href="select-binding.html">Selecting a Binding</a></li>
-        <li role="presentation"><a href="select-sub-atom.html">Selecting a Sub-atom</a></li>
-        <li role="presentation" class="active"><a href="select-visualisation.html">Visualisation</a></li>
+        <li role="presentation"><a href="select-query.html">Step 1: Selecting a Query</a></li>
+        <li role="presentation"><a href="select-call.html">Step 2: Selecting Function Calls</a></li>
+        <li role="presentation"><a href="select-binding.html">Step 3: Selecting a Binding</a></li>
+        <li role="presentation"><a href="select-sub-atom.html">Step 4: Selecting a Sub-atom</a></li>
+        <li role="presentation" class="active"><a href="select-visualisation.html">Step 5: Visualisation</a></li>
         <li role="presentation"><a href="other-examples.html">More Examples</a></li>
 <!--        <li role="presentation"><a href="test-cases.html">Selecting a Test Case</a></li> -->
       </ul>
@@ -75,8 +75,10 @@
     <div class="col-md-8">
     <p> Finally, our selection sequence resulted in highlighting the instrumentation points that are
       relevant for the selected calls, binding, and subatom. These points are now also interactive -
-      we need to choose one at which we want to analyse the results observed at runtime. The first example
-      of this is plotting the observed duration of a call.
+      we need to choose one at which we want to analyse the results observed at runtime. The analysis
+      options are intended to enable visualisation of the measurements recorded at the chosen point.
+      This includes plotting the observed measurements' values, plotting the verdict severity values
+      and comparing the performance of the program with respect to the paths taken.
     </p>
 
     <img class="screenshot" src="../static/images/web_tool/select-option.png">
@@ -86,8 +88,8 @@
     </p>
     <div class="slideshow-container" style="height: 650px;">
       <div class="mySlides fade">
-        <p> The example above is based on a simple formula that refers only to one point in the code.
-          As the formula sets a constraint over the duration of calls of the function <i>find_new_hashes</i>,
+        <p> The example above is based on a simple query that refers only to one point in the code.
+          As the query sets a constraint over the duration of calls of the function <i>find_new_hashes</i>,
           it is logical that we might want to see the observed durations of those calls. The plot below shows
           the observed durations of the mentioned function calls, but only those that occurred during the
           selected function calls of the monitored function <i>check_hashes</i>.
@@ -129,12 +131,14 @@
     <h2> Path Highlighting</h2>
     <p> Having detected the performance successes and issues, we want to also find the potential sources
       of inefficiency. Filtering the results by the path taken through the code will reveal whether
-      verdicts taken by runs that took a particular path are significantly worse than others. Selecting
+      verdicts taken by the runs that took a particular path are significantly worse than others. Selecting
       the option to highlight the paths by verdict severity will expand the code to show all the lines
       and colour the path differences depending on the average verdict severity observed along each path.
     </p>
     <img class="screenshot" src="../static/images/web_tool/simple-path.png">
-    <p> In this case, only one path through the program is found. The code view is expanded and the path is highlighted, but viewing plots by paths is unavailable. See an example that shows analysis by path <a href="other-examples.html">here</a>. </p>
+    <p> In this case, only one path through the program is found. The code view is expanded and the path
+      is highlighted, but viewing plots by paths is unavailable. See an example that shows analysis by
+      path <a href="other-examples.html">here</a>. </p>
 
     </div>
 
