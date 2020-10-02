@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>VyPR - Runtime Verification for Python Web Services</title>
+
+    <!-- Bootstrap -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="static/css/custom.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<nav class="navbar navbar-inverse">
+  	  <div class="container-fluid">
+  	    <!-- Brand and toggle get grouped for better mobile display -->
+  	    <div class="navbar-header">
+  	      <a class="navbar-brand" href="index.html">VyPR</a>
+  	    </div>
+
+  	    <!-- nav links -->
+  	    <div class="collapse navbar-collapse" id="navbar">
+  	      <ul class="nav navbar-nav">
+  	        <!--<li><a href="tutorial.html">Tutorial</a></li>-->
+            <li><a href="use-vypr.html">Get Started with VyPR</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="talks.html">Talks</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="licence.html">Licence</a></li>
+  	      </ul>
+
+          <div class="logo-wrapper">
+            <div class="navbar-right">
+              <img alt="Brand" src="static/logos/cern-logo.png" height="40px">
+            </div>
+            <div class="navbar-right">
+              <img alt="Brand" src="static/logos/manchester-logo.png" height="40px">
+            </div>
+          </div>
+  	    </div><!-- /.navbar-collapse -->
+  	  </div><!-- /.container-fluid -->
+  	</nav>
+
+	<div class="container">
+    <h1>Tutorial</h1>
+    <h2>Requirements</h2>
+    <ul>
+      <li>Python 2.7</li>
+      <li>git</li>
+      <li>tmux</li>
+      <li>Jupyter</li>
+    </ul>
+    <h2>Setup</h2>
+    <p>Here you can find instructions on how to run our tutorial, a self-contained way to introduce users, contributors and students to VyPR.</p>
+    <p>The source of the VyPR tutorial can be found on GitHub <a href="https://github.com/pyvypr/VyPRTutorial" target="_new">here</a>.</p>
+    <p>The tutorial is tested on Linux (Scientific Linux, specifically CERN's distribution) and can be obtained by making a new, clean directory and, inside it, running</p>
+    <pre>curl http://cern.ch/vypr/setup_tutorial.sh -L -o setup_tutorial.sh && chmod +x setup_tutorial.sh</pre>
+    <p>and then executing the <i>setup_tutorial.sh</i> script.</p>
+    <p>Once the script finishes, you will have a new directory structure in the directory you set up, including VyPR's core infrastructure, its verdict server, and the analysis library.</p>
+    <p>The tutorial (a Jupyter notebook) can then be started by navigating to VyPRTutorial/ and running</p>
+    <pre>jupyter notebook --ip 0.0.0.0 --port 9004 --allow-root</pre>
+    <p>This then works like a standard Jupyter notebook - you can use it by navigating to http://localhost:9004.</p>
+  </div>
+
+  <div class="footer-copyright text-center py-3">
+    <p>(C) Copyright 2020 CERN and University of Manchester.</p>
+  </div>
+  
+  </body>
+</html>
