@@ -67,16 +67,17 @@
       <div class="col-md-8">
       <h3>Simple selection of points of interest</h3>
       <p>Once a property is defined, VyPR must be told where in the program to check.  Without this, the variables you use in your property have no meaning.  Suppose that you want to take</p>
-      <pre>If(q('x')._in([0, 10])).then(
-    q.next_call('f')._in([0, 0.5])
-  )</pre>
+      <pre>If(q('x') <= 10).then(
+  q.next_call('f') <= 0.5
+)</pre>
       <p>and check it whenever <b>x</b> changes (so <b>q</b> holds the state in which <b>x</b> has changed).  You can do this with:</p>
       <pre>Forall(q = changes('x')).\
 Check(
-  lambda q : 
-    If(q('x')._in([0, 10])).then(
-      q.next_call('f')._in([0, 0.5])
+  lambda q : (
+    If(q('x') <= 10).then(
+      q.next_call('f') <= 0.5
     )
+  )
 )</pre>
       <p>The <b>Forall</b> tells VyPR that the property given to <b>Check</b> should be checked whenever <b>x</b> changes at runtime.  Further, each time <b>x</b> changes, the state induced will be bound to the variable <b>q</b>.</p>
 
@@ -87,10 +88,11 @@ Check(
 Forall(q = changes('file')).\
 Forall(t = calls('write', after='q')).\
 Check(
-  lambda q, t :
+  lambda q, t : (
     If(q('file').equals('some file name')).then(
-      t.duration()._in([0, 1])
+      t.duration() <= 1
     )
+  )
 )</pre>
 
     <!--<div class="panel panel-default">

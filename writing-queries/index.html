@@ -75,7 +75,7 @@ verification_conf = {
         q = changes('x')
       ).Check(
         lambda q : (
-          q.next_call('g').duration()._in([0, 0.1])
+          q.next_call('g').duration() <= 0.1
         )
       )
     ]# class.method

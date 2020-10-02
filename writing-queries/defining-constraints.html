@@ -68,28 +68,28 @@
       <p>We break down function runs into sequences of states (variables and their values) and operations that take place to transform those values.</p>
       <p>VyPR currently supports writing constraints over variables' values and function calls.  These are treated as <b>objects</b> on which you can call methods to build up constraints.</p>
       <p>Suppose that <b>q</b> holds a <b>state</b>.  Then we can check that the value given to <b>x</b> by <b>q</b> is no more than 1:</p>
-      <pre>q('x')._in([0, 1])</pre>
+      <pre>q('x') <= 1</pre>
       <p>Currently the only transitions that are supported are function calls.  We can take a call <b>t</b> that corresponds to a function call and check that it lasts for no more than 2 seconds:</p>
-      <pre>t.duration()._in([0, 2])</pre>
+      <pre>t.duration() <= 2</pre>
       <p>Given a variable, say <b>q</b>, you can obtain the <b>earliest state or call in the future</b> based on some criteria, and then use the result like a normal variable:</p>
-      <pre>q.next_call('f').duration()._in([0, 1])</pre>
+      <pre>q.next_call('f').duration() <= 1</pre>
       <p>Given any variable <b>t</b> that represents a call, we can ask for the states at either side with</p>
       <pre>t.input()</pre>
       <p>and</p>
       <pre>t.result()</pre>
-      We can then treat these like any other states, for example by measuring the value to which they map a program variable:
+      <p>We can then treat these like any other states, for example by measuring the value to which they map a program variable:</p>
       <pre>t.result()('x')</pre>
-      Measured quantities can also be compared to each other.  We can compare state, for example to check that a function is not modifying a variable:
+      <p>Measured quantities can also be compared to each other.  We can compare state, for example to check that a function is not modifying a variable:</p>
       <pre>t.input()('x').equals(t.result()('x'))</pre>
-      or to check that the duration of a function call has a certain relation to some state:
-      <pre>q.next_call('f').duration().lessThan(q('val'))</pre>
+      <p>or to check that the duration of a function call has a certain relation to some state:</p>
+      <pre>q.next_call('f').duration() < q('val')</pre>
       <p>There are standard propositional operators for you to link predicates on variables.  For example, you can place a constraint on the next call along from the state <b>q</b>, but guarded by a constraint on <b>q</b>:</p>
-      <pre>If(q('x')._in([0, 10])).then(
-  q.next_call('f').duration()._in([0, 0.5])
+      <pre>If(q('x') <= 10).then(
+  q.next_call('f').duration() <= 0.5
 )</pre>
       <p>We could combine the <i>if-then</i> construct to write something like</p>
-      <pre>If(q.next_call('f').input()('x')._in([0, 10])).then(
-  q.next_call('f').duration()._in([0, 0.5])
+      <pre>If(q.next_call('f').input()('x') <= 10).then(
+  q.next_call('f').duration() <= 0.5)
 )</pre>
       <p>which asserts that, for some state held by the variable <b>q</b>, if the value of <i>x</i> immediately before the next call to <i>f</i> is no more than 10, then the next call to <i>f</i> should take no more than 0.5 seconds.</p>
       </div>

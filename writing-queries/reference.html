@@ -67,33 +67,52 @@
       <div class="col-md-8">
       <h3>States</h3>
 
+      <h4>Comparison</h4>
     <p>For the value to which a state <b>q</b> maps <b>x</b>, you can construct the predicates:</p>
     <pre>q('x').equals(v)
 q('x')._in([n, m])
-q('x')._in((n, m))</pre>
+q('x')._in((n, m))
+q('x') < v
+q('x') <= v
+q('x') > v
+q('x') >= v</pre>
     <p>Here, <b>v</b> is either a constant or another measurable quantity (see above).</p>
+
+    <h4>Operators</h4>
     <p>You can find the next call in time to the function <i>f</i> with:</p>
     <pre>q.next_call('f')</pre>
     <p>and treat the result as a call.</p>
+    <p>You can find the length of the value held in the variable <b>x</b> with:</p>
+    <pre>q('x').length()</pre>
 
     <h3>Calls</h3>
+
     <p>For a call <b>t</b>, you can measure the duration with:</p>
     <pre>t.duration()</pre>
     <p>and write predicates on this duration:</p>
-    <pre>t.duration()._in([n, m])</pre>
-    <p>Durations of calls can be compared to other measurable quantities:</p>
-    <pre>t.duration() < v</pre>
-    <p>where <b>v</b> is some other measurable quantity.</p>
+    <pre>t.duration()._in([n, m])
+t.duration()._in((n, m))
+t.duration() < v
+t.duration() <= v
+t.duration() > v
+t.duration() >= v</pre>
+    <p>Here, <b>v</b> is either a constant or another measurable quantity (see above).</p>
     <p>Currently arithmetic with measurable quantities with respect to constants is supported in a limited form:</p>
     <pre>t.duration() < v * n</pre>
     <p>where <b>n</b> is some constant of the same type of the measured quantity <b>v</b>.  NB:  here, multiplication must be on the right-hand side.</p>
     <p>The states at either side of a call can be obtained with:</p>
     <pre>t.input(), t.result()</pre>
-    which gives a <b>state</b> object like any other.
+    <p>which gives a <b>state</b> object like any other.  Hence, you could write something like:</p>
+    <pre>t.input()('x') < t.result()('y')</pre>
     <p>The time between two states can be measured with:</p>
     <pre>timeBetween(q1, q2)</pre>
     <p>which can then be subject to a constraint by writing:</p>
-    <pre>timeBetween(q1, q2)._in([n, m])</pre>
+    <pre>timeBetween(q1, q2)._in([n, m])
+timeBetween(q1, q2) < n
+timeBetween(q1, q2) <= n
+timeBetween(q1, q2) > n
+timeBetween(q1, q2) >= n</pre>
+    <p>Here, <b>n</b> and <b>m</b> must be constants; VyPR does not yet support comparison of the result of <i>timeBetween</i> with other measurable quantities.</p>
     <h2>Multiple Constraints</h2>
     <p>You can use boolean operators to combine predicates:</p>
     <pre>land(a1, a2, ..., a_n)
@@ -109,11 +128,10 @@ lnot(a)</pre>
 t = calls('f')</pre>
     <p>If a selection predicate is given after the first one in the list, it must depend on the previous one:</p>
     <pre>Forall(q = changes('x')).Forall(t = calls('f', after='q'))...</pre>
-    <p>And the property to check at each point of interest is given by:</p>
-    <pre>Forall(q1 = ...). ... .Forall(qn = ...)\
-.Check(
-  lambda q1, ..., qn :
-    (...)
+    <p>The property to check at each point of interest is given by supplying the lambda to the <i>Check</i> method defined on the result of a chain of calls to <i>Forall</i>:</p>
+    <pre>Forall(q1 = ...). ... .Forall(qn = ...).\
+Check(
+  lambda q1, ..., qn : (...)
 )</pre>
       </div>
     </div>
