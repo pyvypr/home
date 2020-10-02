@@ -48,21 +48,32 @@
     <!--<p>Our ultimate goal is to automate performance analysis by having engineers formalise their performance requirements in a temporal logic, and automate explanation of any violations.</p>
     <p><b>VyPR is a step towards such automation.</b>  It allows engineers to write low-level properties over state and time, locally inside functions, and check whether their service holds such properties while the service is still running.  Engineers write properties in our specification language, Control-Flow Temporal Logic (CFTL), using VyPR's Python binding, PyCFTL.</p>!-->
 
-    <div class="navbar-right">
+    <!--<div class="navbar-right">
       <img alt="Brand" src="static/logos/cern-logo.png" height="80px">
     </div>
     <div class="navbar-right">
       <img alt="Brand" src="static/logos/manchester-logo.png" height="80px">
+    </div>-->
+
+    <h2>Welcome!</h2>
+
+    <div class="container-fluid" style="margin-top:50px;">
+      <div class="row">
+        <div class="col-sm-8">
+          <p>A prototype framework under ongoing development that allows developers to analyse the performance of their Python programs by writing queries and analysing the results.</p>
+          <p>Actively developed at <a href="http://home.cern/">CERN</a>, at the <a href="http://cms.cern">CMS Experiment</a>, and <a href="http://manchester.ac.uk">The University of Manchester</a>.</em></p>
+          <p>Author: <a href="http://cern.ch/jdawes" target="new">Joshua Dawes</a></p>
+        </div>
+        <div class="col-sm-4">
+          <center>
+          <p><a href="http://pyvypr.github.io/home/rv2020-tutorial/" class="btn btn-success" style="font-size: 20px;">Explore the VyPR ecosystem</a></p>
+          <p>Docker image containing a sample program monitored by VyPR, and instances of our analysis tools.</p>
+          </center>
+        </div>
+      </div>
     </div>
 
-    <p>A prototype framework under ongoing development that allows developers to analyse the performance of their Python programs by writing queries and analysing the results.</p>
-    <p>Actively developed at <a href="http://home.cern/">CERN</a>, at the <a href="http://cms.cern">CMS Experiment</a>, and <a href="http://manchester.ac.uk">The University of Manchester</a>.</em></p>
-    <p>Author: <a href="http://cern.ch/jdawes" target="new">Joshua Dawes</a></p>
-    <br>
-    <h4>Explore the VyPR ecosystem</h4>
-    <p>We provide a containerised version of our ecosystem that contains live instances of our tools: &nbsp;<a href="http://pyvypr.github.io/home/rv2020-tutorial/" class="btn btn-success">Get Started</a></p>
-
-    <h4>Using VyPR is easy (to make a start, see <a href="use-vypr.html">here</a>):</h4>
+    <h2>Using VyPR is easy (to make a start, see <a href="use-vypr.html">here</a>):</h2>
 
     <div class="container-fluid" style="margin-top:50px;">
       <div class="row">
@@ -70,52 +81,28 @@
           <div class="panel panel-success">
             <div class="panel-heading"><b>1 - Querying</b></div>
             <div class="panel-body">
-              <p><b>You</b> use VyPR's library to write a query about the performance of a part of your program.</p>
+              <p>Write queries over the performance of a part of your program using VyPR's library.</p>
               <p>Queries written for VyPR take the form of properties that a run of that part of the program should hold.</p>
             </div>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="panel panel-info">
-            <div class="panel-heading"><b>2 - Instrumentation</b></div>
+            <div class="panel-heading"><b>2 - Instrumentation and Monitoring</b></div>
             <div class="panel-body">
-              <p>VyPR determines where in your program to take data to check your query.</p>
+              <p>Before runtime, VyPR automatically determines where in your program to take data to check your queries.</p>
+              <p>At runtime, VyPR resolves your queries in the background by taking measurements.</p>
             </div>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="panel panel-info">
-            <div class="panel-heading"><b>3 - Monitoring</b></div>
+            <div class="panel-heading"><b>3 - Analysis</b></div>
             <div class="panel-body">
-              <p>At runtime, VyPR resolves your query by taking measurements.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h4>Analysing Query Results</h4>
-    <p>VyPR collects detailed (but conservative) information at runtime that lets you see:</p>
-    <div class="container-fluid" style="margin-top:50px;">
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="panel panel-info">
-            <div class="panel-body">
-              <p><b>Whether the properties your queries defined were satisfied.</b></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="panel panel-info">
-            <div class="panel-body">
-              <p><b>Whatever the outcome, which parts of the code were responsible.</b></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="panel panel-info">
-            <div class="panel-body">
-              <p><b>Given a group of query results, whether surrounding code may be responsible.</b></p>
+              <p>You can use one of VyPR's analysis tools to see when, where and how the properties defined by your queries were satisfied (or not) by a run of your program.</p>
+              <p>We provide two analysis tools:</p>
+              <p><a class="btn btn-success" href="https://pyvypr.github.io/home/analysis-environment/index.html">Web-based Analysis Environment</a></p>
+              <p><a class="btn btn-success" href="https://pyvypr.github.io/home/analysis-library/index.html">Python Analysis Library</a></p>
             </div>
           </div>
         </div>
