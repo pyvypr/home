@@ -71,8 +71,9 @@ chmod +x setup
 ./setup
 </pre>
     <p>This will pull VyPR, its server and its analysis library, create the server's virtual environment, install dependencies and create the server's database.</p>
+    <p>In every new terminal that you open, you should run <i>source venv/bin/activate</i> (modified with respect to where you are in your directory structure.).</p>
     <h2>Set up VyPR's Server</h2>
-    <p>To run the server, open a new terminal (tmux is useful here), navigate to <i>VyPRServer/</i> and launch the virtual environment with <i>source venv/bin/activate</i>, then run</p>
+    <p>To run the server, open a new terminal (tmux is useful here) and navigate to <i>VyPRServer/</i>.  Then run</p>
 <pre>
 python run_service.py
 </pre>
