@@ -72,9 +72,7 @@
 q('x')._in([n, m])
 q('x')._in((n, m))
 q('x') < v
-q('x') <= v
-q('x') > v
-q('x') >= v</pre>
+q('x') <= v</pre>
     <p>Here, <b>v</b> is either a constant or another measurable quantity (see above).</p>
 
     <h4>Operators</h4>
@@ -92,9 +90,7 @@ q('x') >= v</pre>
     <pre>t.duration()._in([n, m])
 t.duration()._in((n, m))
 t.duration() < v
-t.duration() <= v
-t.duration() > v
-t.duration() >= v</pre>
+t.duration() <= v</pre>
     <p>Here, <b>v</b> is either a constant or another measurable quantity (see above).</p>
     <p>Currently arithmetic with measurable quantities with respect to constants is supported in a limited form:</p>
     <pre>t.duration() < v * n</pre>
@@ -108,9 +104,7 @@ t.duration() >= v</pre>
     <p>which can then be subject to a constraint by writing:</p>
     <pre>timeBetween(q1, q2)._in([n, m])
 timeBetween(q1, q2) < n
-timeBetween(q1, q2) <= n
-timeBetween(q1, q2) > n
-timeBetween(q1, q2) >= n</pre>
+timeBetween(q1, q2) <= n</pre>
     <p>Here, <b>n</b> and <b>m</b> must be constants; VyPR does not yet support comparison of the result of <i>timeBetween</i> with other measurable quantities.</p>
     <h2>Multiple Constraints</h2>
     <p>You can use boolean operators to combine predicates:</p>
